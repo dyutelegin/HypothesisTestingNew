@@ -1,0 +1,42 @@
+﻿@using System.Globalization
+@model TestResultViewModel
+
+@if (Model.HasError)
+{
+    <div class="alert alert-danger">
+        <h5>@Model.GetTranslation(WebConstants.Translations.Error)</h5>
+        @if (!string.IsNullOrWhiteSpace(Model.Error))
+        {
+            @Model.Error
+        }
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <ul class="list-unstyled">
+            <li><b>@Model.GetTranslation(WebConstants.Translations.XValue)</b>: @Model.XValues</li>
+            <li><b>@Model.GetTranslation(WebConstants.Translations.Significance)</b>: @Model.Significance.ToString(CultureInfo.InvariantCulture)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <ul>
+            @for (var i = 0; i < Model.Logs.Count; i++)
+            {
+                if (i == Model.Logs.Count - 1 || i == Model.Logs.Count - 2)
+                {
+                    <li><b>@Model.Logs[i]</b></li>
+                }
+                else
+                {
+                    <li>@Model.Logs[i]</li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<hr />

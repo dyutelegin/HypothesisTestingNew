@@ -1,0 +1,136 @@
+﻿@using HypothesisTestingNew.Domain
+@model TestViewModel
+
+@{
+    ViewData[WebConstants.Translations.Title] = Model.GetTranslation(WebConstants.Translations.Header);
+}
+
+<div class="row mb-3">
+    <div class="col-12">
+        @Html.DropDownListFor(x => x.Language, Model.Languages, new { @class = "form-control-sm" })
+    </div>
+</div>
+
+<div class="row alert alert-info">
+    <div class="col-12">
+        <a href="@Model.FlowChartUrl" target="_blank">@Model.GetTranslation(WebConstants.Translations.FlowChart)</a>
+    </div>
+</div>
+
+<form id="form">
+    <div class="row">
+        <div class="col-6">
+            <h5>@Model.GetTranslation(WebConstants.Translations.XValue)</h5>
+            @Html.TextAreaFor(x => x.XValues, new { @class = "form-control", rows = 8, cols = 5 })
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5>@Model.GetTranslation(WebConstants.Translations.SampleType)</h5>
+            <ul class="list-unstyled">
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.SamplesType, Constants.SamplesTypes.Independent)
+                        @Model.GetTranslation(WebConstants.Translations.Independent)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.SamplesType, Constants.SamplesTypes.Paired)
+                        @Model.GetTranslation(WebConstants.Translations.Paired)
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5>@Model.GetTranslation(WebConstants.Translations.ScaleMeasure)</h5>
+            <ul class="list-unstyled">
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.ScaleMeasure, Constants.ScaleMeasures.Interval)
+                        @Model.GetTranslation(WebConstants.Translations.Interval)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.ScaleMeasure, Constants.ScaleMeasures.Ordinal)
+                        @Model.GetTranslation(WebConstants.Translations.Ordinal)
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.ScaleMeasure, Constants.ScaleMeasures.Nominal)
+                        @Model.GetTranslation(WebConstants.Translations.Nominal)
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h5>@Model.GetTranslation(WebConstants.Translations.Significance)</h5>
+            <ul class="list-unstyled">
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.Significance, 0.01)
+                        0.01
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.Significance, 0.05)
+                        0.05
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        @Html.RadioButtonFor(x => x.Significance, 0.1)
+                        0.1
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <input type="submit" class="btn btn-success" value="@Model.GetTranslation(WebConstants.Translations.Submit)" />
+</form>
+
+<hr />
+
+<div class="row mt-4">
+    <div class="col-12 results">
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function() {
+            $("#@nameof(TestViewModel.Language)").change(function () {
+                var lang = $("#@nameof(TestViewModel.Language)").val();
+
+                var url = "@Url.Action("Index")";
+                location.href = url + "?language=" + lang;
+            });
+
+            $("#form").submit(function(e) {
+                e.preventDefault();
+
+                var viewModel = {
+                    xValues: $("#@nameof(TestViewModel.XValues)").val(),
+                    scaleMeasure: $("input[name=@nameof(TestViewModel.ScaleMeasure)]:checked").val(),
+                    samplesType: $("input[name=@nameof(TestViewModel.SamplesType)]:checked").val(),
+                    language: $('#@nameof(TestViewModel.Language)').val(),
+                    significance: $('input[name=@nameof(TestViewModel.Significance)]:checked').val()
+                };
+
+                $.post("@Url.Action("Submit")", viewModel, function (result) {
+                    var newDiv = $("<div/>");
+                    newDiv.html(result);
+                    $(newDiv).prependTo(".results");
+                });
+            });
+        });
+    </script>
+}
+
