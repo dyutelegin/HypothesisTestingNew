@@ -5,14 +5,14 @@ namespace HypothesisTestingNew.Infrastructure.Input
 {
     public static class InputValidator
     {
-        public static bool IsValid(string sampleType, DataSeries x)
+        public static bool IsValid(string sampleType, double[] x)
         {
             if (sampleType == Constants.SamplesTypes.Independent)
             {
                 return true;
             }
 
-            return x.Values.Length < 100;
+            return x.Length < 100;
         }
     }
 }

@@ -16,6 +16,7 @@
             public const string Interval = nameof(Interval);
             public const string Ordinal = nameof(Ordinal);
             public const string Submit = nameof(Submit);
+            public const string GetHistogram = nameof(GetHistogram);
             public const string Error = nameof(Error);
             public const string ErrorIncorrectData = nameof(ErrorIncorrectData);
             public const string ErrorIncorrectDataSize = nameof(ErrorIncorrectDataSize);

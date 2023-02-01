@@ -1,4 +1,6 @@
-﻿namespace HypothesisTestingNew.Domain
+﻿using HypothesisTestingNew.Domain.Ports.Statistics;
+
+namespace HypothesisTestingNew.Domain
 {
     public static class Constants
     {
@@ -31,6 +33,15 @@
             public const string SelectingStrategy = nameof(SelectingStrategy);
             public const string ExpectedValueResult = nameof(ExpectedValueResult);
             public const string SamePopulationResult = nameof(SamePopulationResult);
+            public const string HistogramResult = nameof(HistogramResult);
+            public const string ShapiroWilkTest = nameof(ShapiroWilkTest);
+            public const string ModaTest = nameof(ModaTest);
+            public const string MedianaTest = nameof(MedianaTest);
+            public const string RandomnessTest = nameof(RandomnessTest);
+            public const string Conclusion1RandomnessTest = nameof(Conclusion1RandomnessTest);
+            public const string Conclusion2RandomnessTest = nameof(Conclusion2RandomnessTest);
+            public const string Conclusion3RandomnessTest = nameof(Conclusion3RandomnessTest);
+            public const string SampleSizeTest = nameof(SampleSizeTest);
         }
 
         public const double DefaultSignificance = 0.05;

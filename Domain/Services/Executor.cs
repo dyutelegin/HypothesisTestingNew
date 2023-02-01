@@ -2,14 +2,16 @@
 using System.Linq;
 using HypothesisTestingNew.Domain.Extensions;
 using HypothesisTestingNew.Domain.Models;
+using HypothesisTestingNew.Domain.Ports.Statistics;
 using HypothesisTestingNew.Domain.Ports.Translations;
-using HypothesisTestingNew.Domain.Statistics;
 using HypothesisTestingNew.Domain.Strategies;
 
 namespace HypothesisTestingNew.Domain.Services
 {
     public interface IExecutor
     {
+        //OutputData Execute(InputData inputData);
+
         OutputData Execute(InputData inputData);
     }
 
@@ -18,29 +20,35 @@ namespace HypothesisTestingNew.Domain.Services
         private readonly IEnumerable<IStrategy> _strategies;
         private readonly IExecutionLogger _logger;
         private readonly ITranslator _translator;
+        private readonly IHistogramTest _histogramTest;
 
-        public Executor(IEnumerable<IStrategy> strategies, IExecutionLogger logger, ITranslator translator)
+        public Executor(IEnumerable<IStrategy> strategies, IExecutionLogger logger, 
+            ITranslator translator, IHistogramTest histogramTest)
         {
             _strategies = strategies;
             _logger = logger;
             _translator = translator;
+            _histogramTest = histogramTest;
         }
 
+        // Główny executor
         public OutputData Execute(InputData inputData)
         {
+            
             LogStrategy(inputData);
 
-            var strategy = _strategies.SingleOrDefault(x => x.ScaleMeasure == inputData.ScaleMeasure &&
-                                                            x.SampleType == inputData.SampleType);
+            var strategy = _strategies.SingleOrDefault(x => x.ScaleMeasures == inputData.ScaleMeasures);
 
             if (strategy == null)
             {
                 var notFoundLog = _translator.Translate(Constants.Translations.StrategyNotFound);
                 _logger.AddLog(notFoundLog);
                 return OutputData.Error();
-            }
+            }       
 
             var outputData = strategy.Execute(inputData);
+
+            outputData.Histogram = _histogramTest.Calculate(inputData.xValues);
 
             LogResult(inputData, outputData);
 
@@ -49,9 +57,8 @@ namespace HypothesisTestingNew.Domain.Services
 
         private void LogStrategy(InputData inputData)
         {
-            var sampleType = _translator.Translate(inputData.SampleType);
-            var scaleMeasure = _translator.Translate(inputData.ScaleMeasure);
-            var log = _translator.Translate(Constants.Translations.SelectingStrategy, sampleType, scaleMeasure);
+            var scaleMeasure = _translator.Translate(inputData.ScaleMeasures);
+            var log = _translator.Translate(Constants.Translations.SelectingStrategy, scaleMeasure);          
             _logger.AddLog(log);
         }
 
@@ -61,13 +68,13 @@ namespace HypothesisTestingNew.Domain.Services
             {
                 return;
             }
+            var histogramResult = _translator.Translate(Constants.Translations.HistogramResult, outputData.Histogram);
+            _logger.AddLog(histogramResult);
 
-            var @true = _translator.Translate(HypothesisHelper.IsHypothesisTrue(outputData.PValue, inputData.Significance).ToString());
-
-            if (!string.IsNullOrWhiteSpace(outputData.ResultKey))
-            {
-                var resultLog = _translator.Translate(outputData.ResultKey, outputData.PValue.Round(), @true);
-                _logger.AddLog(resultLog);
+             if (!string.IsNullOrWhiteSpace(outputData.ResultKey))
+             {
+                var stringlog = _translator.Translate(outputData.ResultKey, outputData.Moda);
+                _logger.AddLog(stringlog);
             }
         }
     }

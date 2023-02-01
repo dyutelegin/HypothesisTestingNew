@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HypothesisTestingNew.Domain.Ports.Translations;
 using HypothesisTestingNew.Domain.Models;
 using HypothesisTestingNew.Domain.Services;
+using static HypothesisTestingNew.Domain.Constants;
 
 namespace HypothesisTestingNew.Models
 {
@@ -33,7 +34,6 @@ namespace HypothesisTestingNew.Models
                 HasError = outputData.HasError,
                 Error = outputData.ErrorText,
                 XValues = testDto.XValues,
-                Significance = testDto.Significance,
             };
 
             return viewModel;
@@ -46,7 +46,6 @@ namespace HypothesisTestingNew.Models
                 Logs = executionLogger.GetLog().ToList(),
                 HasError = true,
                 XValues = dto.XValues,
-                Significance = dto.Significance,
                 Error = string.IsNullOrWhiteSpace(errorKey) ? string.Empty : translator.Translate(errorKey),
             };
 

@@ -4,10 +4,8 @@ namespace HypothesisTestingNew.Domain.Strategies
 {
     public interface IStrategy
     {
-        string SampleType { get; }
+        string ScaleMeasures { get; }
 
-        string ScaleMeasure { get; }
-
-        OutputData Execute(InputData input);
+        OutputData Execute(InputData input); 
     }
 }

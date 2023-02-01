@@ -50,12 +50,12 @@ namespace HypothesisTestingNew.Controllers
                 return PartialView("Results", TestResultViewModel.ToErrorViewModel(dto, _translator, _executionLogger, Translations.ErrorIncorrectDataSize));
             }
 
-            if (!InputValidator.IsValid(dto.SamplesType, x))
+            if (!InputValidator.IsValid(dto.ScaleMeasure, x))
             {
                 return PartialView("Results", TestResultViewModel.ToErrorViewModel(dto, _translator, _executionLogger, Translations.ErrorPairedDataMustHaveSameSize));
             }
 
-            var inputData = new InputData(x, dto.SamplesType, dto.ScaleMeasure, dto.Significance);
+            var inputData = new InputData(x, dto.ScaleMeasure);
             var outputData = _executor.Execute(inputData);
             var viewModel = TestResultViewModel.ToViewModel(dto.Language, _translator, dto, outputData, _executionLogger);
 

@@ -16,7 +16,6 @@
     <div class="col-12">
         <ul class="list-unstyled">
             <li><b>@Model.GetTranslation(WebConstants.Translations.XValue)</b>: @Model.XValues</li>
-            <li><b>@Model.GetTranslation(WebConstants.Translations.Significance)</b>: @Model.Significance.ToString(CultureInfo.InvariantCulture)</li>
         </ul>
     </div>
 </div>
@@ -28,11 +27,11 @@
             {
                 if (i == Model.Logs.Count - 1 || i == Model.Logs.Count - 2)
                 {
-                    <li><b>@Model.Logs[i]</b></li>
+                    <li>@Html.Raw(Model.Logs[i])</li>
                 }
                 else
                 {
-                    <li>@Model.Logs[i]</li>
+                    <li>@Html.Raw(Model.Logs[i])</li>
                 }
             }
         </ul>

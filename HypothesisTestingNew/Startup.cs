@@ -1,13 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using HypothesisTestingNew.Web.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using HypothesisTestingNew.Adapters.AccordNET.Extensions;
 
 namespace HypothesisTestingNew
 {
@@ -24,6 +21,8 @@ namespace HypothesisTestingNew
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddAccordNet();
+            services.AddHypothesisTesting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

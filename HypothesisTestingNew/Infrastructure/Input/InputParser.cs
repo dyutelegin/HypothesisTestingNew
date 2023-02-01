@@ -7,7 +7,7 @@ namespace HypothesisTestingNew.Infrastructure.Input
 {
     public static class InputParser
     {
-        public static bool TryParse(string val, out DataSeries dataSeries)
+        public static bool TryParse(string val, out double[] XValues)
         {
             try
             {
@@ -15,15 +15,15 @@ namespace HypothesisTestingNew.Infrastructure.Input
                     .Trim()
                     .Split(new[] { ',', ';', '\n' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(x => Convert.ToDouble(x, CultureInfo.InvariantCulture))
-                    .ToList();
+                    .ToArray();
 
-                dataSeries = new DataSeries(sample);
+                XValues = sample;
 
-                return sample.Count >= 5;
+                return sample.Length >= 5;
             }
             catch (Exception)
             {
-                dataSeries = new DataSeries(Array.Empty<double>());
+                XValues = Array.Empty<double>();
 
                 return false;
             }
