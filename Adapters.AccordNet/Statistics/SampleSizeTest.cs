@@ -19,11 +19,11 @@ namespace HypothesisTestingNew.Adapters.AccordNet.Statistics
             var CL = 0.95;
             var nSqrt = (z_score * standardDevision) / errorBound;
             var n = Math.Pow(nSqrt, 2);
-            return "<br><b>Standard devision: </b>" + String.Format("{0:N3}", standardDevision) +
-                "<br><b>Average: </b>" + String.Format("{0:N3}", average) +
-                "<br><b>Variance: </b>" + String.Format("{0:N3}", variance) +
-                "<br><b>Error bound: </b>" + String.Format("{0:N3}", errorBound) +
-                "<br><b>Confidence level: </b>" + CL + 
+            return "<br><b>Odchylenie Standardowe: </b>" + String.Format("{0:N3}", standardDevision) +
+                "<br><b>Wariancja: </b>" + String.Format("{0:N3}", variance) +
+                "<br><b>Średnia: </b>" + String.Format("{0:N3}", average) +
+                "<br><b>Błąd związany: </b>" + String.Format("{0:N3}", errorBound) +
+                "<br><b>Poziom ufności: </b>" + CL + 
                 "<br><b>n = </b>" + String.Format("{0:N3}", n);
         }
 

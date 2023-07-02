@@ -11,7 +11,7 @@ namespace HypothesisTestingNew.Adapters.AccordNet.Statistics
         public string Calculate(double[] sample)
         {
             var basicStatistic = new BasicStatistics();
-            double geometricMean = Math.Pow(basicStatistic.Multiplication(sample), (1.0 / sample.Length)); 
+            double geometricMean = Math.Pow(basicStatistic.Multiplication(sample), (1 / sample.Length)); 
             TTest ttestLeft = new TTest(sample, geometricMean, OneSampleHypothesis.ValueIsSmallerThanHypothesis);
             double pValueLeft = ttestLeft.PValue;
             TTest ttesRight = new TTest(sample, geometricMean, OneSampleHypothesis.ValueIsGreaterThanHypothesis);

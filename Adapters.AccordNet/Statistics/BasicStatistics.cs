@@ -24,17 +24,94 @@ namespace HypothesisTestingNew.Adapters.AccordNet.Statistics
             string moda = modaTest.Calculate(sample);
             double largest = sample[count - 1];
             double smallest = sample[0];
-            double geometricMean = Math.Pow(Multiplication(sample), (1.0 / sample.Length));
+            double geometricMean = Math.Pow(Multiplication(sample), (1 / sample.Length));
             double range = largest - smallest;
             double variance = sampleTest.Variance(sample);
             double standardDevision = Math.Sqrt(variance);
             double sampleStandardDeviation = SampleStandardDeviation(sample);
-            return "<b>Ilość: </b>" + count + " <b>Suma: </b>" + sum + " <b>Średnia: </b>" + String.Format("{0:N3}", average)
-                + " <b>Mediana: </b>" + mediana + " <b>Moda: </b>" + moda
-                + " <b>Największy: </b>" + largest + " <b>Najmniejszy: </b>" + smallest 
-                + " <b>Średnia Geometryczna: </b>" + String.Format("{0:N3}", geometricMean) + " <b>Range: </b>" + range 
-                + " <b>Variance: </b>" + String.Format("{0:N3}", variance) + " <b>Standard Devision: </b>" + String.Format("{0:N3}", standardDevision)
-                + " <b>Sample Standard Deviation: </b>" + String.Format("{0:N3}", sampleStandardDeviation);
+
+            string htmlTable = "<table table border=\"3\" align=\"left\" style=\"width:40%; table-layout:fixed;\" >" +
+                "<tbody>" +
+                "<tr>" +
+                "<td><b>Statistic</b>" +
+                "</td>" +
+                "<td><b>Wynik</b>" +
+                "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Ilość</b>" + 
+                "</td>" +
+                "<td>" + count +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Suma</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", sum) +
+                "</td>" + 
+                "</tr>" +
+                "<td><b>Średnia</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", average) +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Mediana</b>" +
+                "</td>" +
+                "<td>" + mediana +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Moda</b>" +
+                "</td>" +
+                "<td>" + moda +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Największy</b>" +
+                "</td>" +
+                "<td>" + largest +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Najmniejszy</b>" +
+                "</td>" +
+                "<td>" + smallest +
+                "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Średnia Geometryczna</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", geometricMean) +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Zasięg</b>" +
+                "</td>" +
+                "<td>" + range +
+                "</td>" + 
+                "</tr>" +
+                "<td><b>Wariancja</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", variance) +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Odchylenie Standardowe</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", standardDevision) +
+                "</td>" + 
+                "</tr>" +
+                "<tr>" +
+                "<td><b>Przykładowe Odchylenie Standardowe</b>" +
+                "</td>" +
+                "<td>" + String.Format("{0:N3}", sampleStandardDeviation) +
+                "</td>" + 
+                "</tr>" +
+                "</tbody>" +
+                "</table>";
+
+            return htmlTable;
         }
 
         public double Multiplication(double[] sample)

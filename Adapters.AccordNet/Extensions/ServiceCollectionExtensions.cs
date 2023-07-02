@@ -19,6 +19,7 @@ namespace HypothesisTestingNew.Adapters.AccordNET.Extensions
             .AddScoped<IBasicStatistics, BasicStatistics>()
             .AddScoped<ITTest, TTestImplementation>()
             .AddScoped<IBinomialTest, BinomialTestImplementation>()
-            .AddScoped<IProportionTest, ProportionTest>();
+            .AddScoped<IProportionTest, ProportionTest>()
+            .AddScoped<INormalTest, NormalTest>();
     }
 }

@@ -15,7 +15,8 @@ namespace HypothesisTestingNew.Adapters.AccordNet.Statistics
     {
         public string Calculate(double[] sample)
         {
-            double geometricMean = Math.Pow(Multiplication(sample), (1.0 / sample.Length));
+            double multipl = Multiplication(sample);
+            double geometricMean = Math.Pow(multipl, (1 / sample.Length));
             double pValue = new TTest(sample, geometricMean, OneSampleHypothesis.ValueIsSmallerThanHypothesis).PValue;
             List<double> countN1 = new List<double>();
 
